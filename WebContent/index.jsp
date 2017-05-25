@@ -11,6 +11,25 @@
 <h1>Welcome Page</h1>
 <script type="text/javascript">
 	alert("3+6 = " + add(3, 6));
+	var obj = {	num1: 1,
+				num2: 2,
+				num3: 3
+			  };
+	obj.xxx = 'xxx';
+	var another = Object.create(obj);
+	another.yyy = 'yyy';
+	var anotherOfAnother = Object.create(another);
+	console.log(anotherOfAnother);
+	console.log(anotherOfAnother.xxx);
+	console.log(anotherOfAnother.yyy);
+	console.log(typeof anotherOfAnother.num3);
+	console.log(obj.hasOwnProperty('num1'));
+	var name;
+	for(name in anotherOfAnother){
+		console.log(name + " : " + anotherOfAnother[name]);
+	}
+	delete obj.xxx;
+	console.log(anotherOfAnother);
 </script>
 </body>
 </html>
