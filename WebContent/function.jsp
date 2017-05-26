@@ -10,48 +10,68 @@
 <body>
 <h1>Welcome Page</h1>
 <script type="text/javascript">
-	alert("3+6 = " + add(3, 6));
 	//Method invocation
+	console.log('************Start of Method invocation************');
 	var obj = {	num1: 1,
 				num2: 2,
 				num3: 3,
-				multi: function(a,b){
-					return a*b;
+				increment: function(x){
+					this.num1 += x;
+					this.num2 += x;
+					this.num3 += x;
+					console.log(this);
 				}
-			  };
-	console.log(obj.num3 + " * " + obj.num2 + " = " + obj.multi(obj.num3,obj.num2));
+			  }
+	obj.increment(3);
+	console.log(this);
+	
 	
 	//Function Invocation
-	var myObj = {
-					value : 5
-				};
-	myObj.doubles = function(){
-// 		var that = this;
-// 		var helper = function () {
-// 			that.value = add(that.value, that.value);
-// 		}
-// 		helper();
-		this.value = 2 * this.value;
-	}
-	myObj.doubles();
-	console.log("myObj.value = " + myObj.value);
+	console.log('************Start of Function invocation************');
+	var value = 100;
+	var objFunction = {
+		value : 30,
+		increment : function(){
+			var that = this;
+			that.value++;
+			var innerfunction = function(){
+				console.log("value innerfunction = " + that.value);
+				console.log(that);
+			}
+			innerfunction();
+		}
+	};
+	objFunction.increment();
+	
 	//Constructor Invocation
-	var Quo = function(str){
-		this.status = str;
+	console.log('************Start of Constructor invocation************');
+	var ObjConstruct = function(vName){
+		this.name = vName;
 	}
-	Quo.prototype.get_status = function(){
-		return this.status;
+	
+	ObjConstruct.prototype.getName = function(){
+		return this.name+"extra";
 	}
-	var MyQuo = new Quo("xxx");
-	console.log(MyQuo.get_status());
+	
+	var xxxConstruct = new ObjConstruct("xxx");
+	console.log("name= " + xxxConstruct.name + ", getName= "+ xxxConstruct.getName());
 	
 	//Apply Invocation
-	var array = [3,4];
-	var sum = add.apply(null,array);
-	console.log("apply add: " + sum);
-	var statusObj = {status: 'OK'};
-	var status = Quo.prototype.get_status.apply(statusObj);
-	console.log(status);
+	console.log('************Start of Apply invocation************');
+	array = [3,4];
+	var sum = add.apply(null,array); //7
+	console.log("sum in apply: " + sum);
+	
+	var objApply = {
+	    data:'Hello World'
+	}
+
+	var displayData = function() {
+	    console.log(this.data);
+	}
+
+	displayData(); //undefined
+	displayData.apply(objApply); //Hello World
 </script>
 </body>
 </html>
