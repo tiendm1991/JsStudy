@@ -53,7 +53,7 @@
 		return this.name+"extra";
 	}
 	
-	var xxxConstruct = new ObjConstruct("xxx");
+	var xxxConstruct = new ObjConstruct("xxx");//Note: new oprator will create an object bound the function
 	console.log("name= " + xxxConstruct.name + ", getName= "+ xxxConstruct.getName());
 	
 	//Apply Invocation
@@ -135,25 +135,144 @@
 	}
 	console.log("factori(5)= " + factori(5));
 	
-	//Recursion
+	//Scope
 	console.log('************Start of Scope************');
-	var x = {
-		foo : function() {
-			var aScope = 3, bScope = 5, cScope;
-			var bar = function () {
-				var bScope = 7, cScope = 11;
-// 				console.log(this);
-				console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-				aScope += bScope + cScope;
-				console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+	var	foo = function() {
+				var aScope = 3, bScope = 5, cScope;
+				var bar = function () {
+					var bScope = 7, cScope = 11;
+					console.log("1. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+					aScope += bScope + cScope;
+					console.log("2. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				}
+				console.log("3. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				bar();
+				console.log("4. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				return bar;
 			}
-			console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-			bar();
-			console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-			return bar;
+	foo();
+	//Closure
+	console.log('************Start of Closure************');
+	//1. protectect object
+	var objClouse = function() {
+		var value = 2;
+		return {
+			increment : function() {
+				value += 1;
+			},
+			getValue : function() {
+				return value;
+			}
+		}
+	}
+	var closure = objClouse();
+	closure.increment();
+	console.log(closure.getValue());
+	
+	//2. Quo
+	var Quo = function(status) {
+		return {
+			get_status : function() {
+				return status;
+			}
+		}
+	}
+	var quo =  Quo('xxxQuoClosure');
+	console.log(quo);
+	//Note: new oprator will create an object bound the function
+	var testNew = function(){
+	  this.A = 1;
+	  this.B = 2;
+	  return this;
+	};
+	var testNew1 = testNew(); // return window object because this is function patterm
+	var testNew2 = new testNew(); // return an object wrapper function have 2 prototype a=1, b=2
+	console.log(testNew2);
+	
+	//access closure
+	var add_the_handlers = function (nodes) {
+		alert('start');
+		var i;
+		for (i = 0; i < nodes.length; i += 1) {
+			nodes[i].onclick = function (e) {
+				alert(i);
+			};
 		}
 	};
-	var bar = x.foo();
+	
+	//Closure2
+	console.log('************Start of Closure2************');
+	var makeAdder = function(x) {
+		var z = 11;
+		if(true){
+			var z = 22;
+		}
+		return function(y){
+			console.log("lexical scope when duplicate var z. z = " + z);
+			return x+y;
+		}
+		
+	}
+	var add5 = makeAdder(5);
+	var add10 = makeAdder(10);
+	console.log(add5(4));
+	console.log(add10(8));
+	
+	var showLink = function(x){
+		alert(x);
+	}
+	
+	var createFunctionShow = function(x) {
+		return function() {
+			showLink(x);
+		}
+	}
+	
+	var closureClick = function() {
+		var links = ['button1','button2','button3'];
+		var i;
+		for(i = 0; i < links.length; i++){
+			document.getElementById(links[i]).onclick = createFunctionShow(links[i]);
+		}
+	}
+	closureClick();
+	
+	//Memoization
+	//1. fibonaci
+	var fibonaci = function() {
+		var memo = [0,1];
+		var fib = function(n) {
+			var x = memo[n];
+			if(typeof x !== 'number'){
+				x = fib(n-1) + fib(n-2);
+				memo[n] = x;
+			}
+// 			console.log(memo);
+			return x;
+		};
+		return fib;
+	}
+	
+	var fibo = fibonaci();
+	console.log("fibonaci of 8 = " + fibo(8)); 
+	
+	//2.Genalri
+	var memoizer = function(memory, fundamental) {
+		var shell = function(n) {
+			var result = memory[n];
+			if(typeof result !== 'number'){
+				result = fundamental(shell,n);
+				memory[n] = result;
+			}
+			return result;
+		};
+		return shell;
+	}
+	var fibo2 = memoizer([0,1], function(shell,n) {
+		return shell(n-1) + shell(n-2);
+	});
+	console.log("fibonaci2 of 8 = " + fibo2(8));
+	add_the_handlers(document.body);
 </script>
 </body>
 </html>
