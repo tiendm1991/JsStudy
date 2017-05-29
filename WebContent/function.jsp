@@ -56,7 +56,7 @@
 		return this.name+"extra";
 	}
 	
-	var xxxConstruct = new ObjConstruct("xxx");
+	var xxxConstruct = new ObjConstruct("xxx");//Note: new oprator will create an object bound the function
 	console.log("name= " + xxxConstruct.name + ", getName= "+ xxxConstruct.getName());
 	
 	//Apply Invocation
@@ -154,6 +154,43 @@
 			return bar;
 	}
 	foo();
+	//Closure
+	console.log('************Start of Closure************');
+	//1. protectect object
+	var objClouse = function() {
+		var value = 2;
+		return {
+			increment : function() {
+				value += 1;
+			},
+			getValue : function() {
+				return value;
+			}
+		}
+	}
+	var closure = objClouse();
+	closure.increment();
+	console.log(closure.getValue());
+	
+	//2. Quo
+	var Quo = function(status) {
+		return {
+			get_status : function() {
+				return status;
+			}
+		}
+	}
+	var quo =  Quo('xxxQuoClosure');
+	console.log(quo);
+	//Note: new oprator will create an object bound the function
+	var testNew = function(){
+	  this.A = 1;
+	  this.B = 2;
+	  return this;
+	};
+	var testNew1 = testNew(); // return window object because this is function patterm
+	var testNew2 = new testNew(); // return an object wrapper function have 2 prototype a=1, b=2
+	console.log(testNew2);
 	
 	//Closure2
 	console.log('************Start of Closure2************');
@@ -227,6 +264,7 @@
 		return shell(n-1) + shell(n-2);
 	});
 	console.log("fibonaci2 of 8 = " + fibo2(8));
+	add_the_handlers(document.body);
 </script>
 </body>
 </html>
