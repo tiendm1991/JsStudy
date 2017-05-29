@@ -9,6 +9,9 @@
 </head>
 <body>
 <h1>Welcome Page</h1>
+<button id="button1">Click1</button>
+<button id="button2">Click2</button>
+<button id="button3">Click3</button>
 <script type="text/javascript">
 	//Method invocation
 	console.log('************Start of Method invocation************');
@@ -124,7 +127,7 @@
 		if(disc > 0){
 			towerHanoi(disc-1, src, dest, aux);
 			console.log("step " + (iTower++) + " : move " + disc +" from " + src + " to " + dest);
-			towerHanoi(disc-1, aux, src, dest)
+			towerHanoi(disc-1, aux, src, dest);
 		}
 	}
 	towerHanoi(3, 'A', 'B', 'C');
@@ -137,19 +140,19 @@
 	
 	//Scope
 	console.log('************Start of Scope************');
-	var	foo = function() {
-				var aScope = 3, bScope = 5, cScope;
-				var bar = function () {
-					var bScope = 7, cScope = 11;
-					console.log("1. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-					aScope += bScope + cScope;
-					console.log("2. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-				}
-				console.log("3. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-				bar();
-				console.log("4. " + "a = " + aScope + " , b =" +bScope + " , c = " + cScope);
-				return bar;
+	var foo = function() {
+			var aScope = 3, bScope = 5, cScope;
+			var bar = function () {
+				var bScope = 7, cScope = 11;
+				console.log("1. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				aScope += bScope + cScope;
+				console.log("2. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
 			}
+			console.log("3. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+			bar();
+			console.log("4. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+			return bar;
+	}
 	foo();
 	//Closure
 	console.log('************Start of Closure************');
@@ -188,17 +191,6 @@
 	var testNew1 = testNew(); // return window object because this is function patterm
 	var testNew2 = new testNew(); // return an object wrapper function have 2 prototype a=1, b=2
 	console.log(testNew2);
-	
-	//access closure
-	var add_the_handlers = function (nodes) {
-		alert('start');
-		var i;
-		for (i = 0; i < nodes.length; i += 1) {
-			nodes[i].onclick = function (e) {
-				alert(i);
-			};
-		}
-	};
 	
 	//Closure2
 	console.log('************Start of Closure2************');
