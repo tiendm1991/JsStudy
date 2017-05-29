@@ -40,6 +40,7 @@
 			var innerfunction = function(){
 				console.log("value innerfunction = " + that.value);
 				console.log(that);
+				console.log(this);
 			}
 			innerfunction();
 		}
@@ -264,7 +265,6 @@
 		return shell(n-1) + shell(n-2);
 	});
 	console.log("fibonaci2 of 8 = " + fibo2(8));
-	add_the_handlers(document.body);
 </script>
 </body>
 </html>
