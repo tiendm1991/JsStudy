@@ -9,6 +9,9 @@
 </head>
 <body>
 <h1>Welcome Page</h1>
+<button id="button1">Click1</button>
+<button id="button2">Click2</button>
+<button id="button3">Click3</button>
 <script type="text/javascript">
 	//Method invocation
 	console.log('************Start of Method invocation************');
@@ -124,7 +127,7 @@
 		if(disc > 0){
 			towerHanoi(disc-1, src, dest, aux);
 			console.log("step " + (iTower++) + " : move " + disc +" from " + src + " to " + dest);
-			towerHanoi(disc-1, aux, src, dest)
+			towerHanoi(disc-1, aux, src, dest);
 		}
 	}
 	towerHanoi(3, 'A', 'B', 'C');
@@ -135,25 +138,95 @@
 	}
 	console.log("factori(5)= " + factori(5));
 	
-	//Recursion
+	//Scope
 	console.log('************Start of Scope************');
-	var x = {
-		foo : function() {
+	var foo = function() {
 			var aScope = 3, bScope = 5, cScope;
 			var bar = function () {
 				var bScope = 7, cScope = 11;
-// 				console.log(this);
-				console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				console.log("1. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
 				aScope += bScope + cScope;
-				console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+				console.log("2. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
 			}
-			console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+			console.log("3. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
 			bar();
-			console.log("a = " + aScope + " , b =" +bScope + " , c = " + cScope);
+			console.log("4. "+"a = " + aScope + " , b =" +bScope + " , c = " + cScope);
 			return bar;
+	}
+	foo();
+	
+	//Closure2
+	console.log('************Start of Closure2************');
+	var makeAdder = function(x) {
+		var z = 11;
+		if(true){
+			var z = 22;
 		}
-	};
-	var bar = x.foo();
+		return function(y){
+			console.log("lexical scope when duplicate var z. z = " + z);
+			return x+y;
+		}
+		
+	}
+	var add5 = makeAdder(5);
+	var add10 = makeAdder(10);
+	console.log(add5(4));
+	console.log(add10(8));
+	
+	var showLink = function(x){
+		alert(x);
+	}
+	
+	var createFunctionShow = function(x) {
+		return function() {
+			showLink(x);
+		}
+	}
+	
+	var closureClick = function() {
+		var links = ['button1','button2','button3'];
+		var i;
+		for(i = 0; i < links.length; i++){
+			document.getElementById(links[i]).onclick = createFunctionShow(links[i]);
+		}
+	}
+	closureClick();
+	
+	//Memoization
+	//1. fibonaci
+	var fibonaci = function() {
+		var memo = [0,1];
+		var fib = function(n) {
+			var x = memo[n];
+			if(typeof x !== 'number'){
+				x = fib(n-1) + fib(n-2);
+				memo[n] = x;
+			}
+// 			console.log(memo);
+			return x;
+		};
+		return fib;
+	}
+	
+	var fibo = fibonaci();
+	console.log("fibonaci of 8 = " + fibo(8)); 
+	
+	//2.Genalri
+	var memoizer = function(memory, fundamental) {
+		var shell = function(n) {
+			var result = memory[n];
+			if(typeof result !== 'number'){
+				result = fundamental(shell,n);
+				memory[n] = result;
+			}
+			return result;
+		};
+		return shell;
+	}
+	var fibo2 = memoizer([0,1], function(shell,n) {
+		return shell(n-1) + shell(n-2);
+	});
+	console.log("fibonaci2 of 8 = " + fibo2(8));
 </script>
 </body>
 </html>
