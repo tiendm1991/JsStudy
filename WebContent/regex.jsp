@@ -32,6 +32,22 @@
 	for(i = 0; i < nums.length; i++){
 		console.log(nums[i] + ' : ' + test(nums[i]));	
 	}
+	
+	function make_a_matcher() {
+		return /a/gi;
+	}
+	var x = make_a_matcher( );
+	var y = make_a_matcher( );
+	// Beware: x and y are the same object!
+	x.lastIndex = 10;
+	console.log(x.lastIndex); // 10
+	console.log(y.lastIndex); // 10
+	
+	//Test \1
+	console.log('test backslash1');
+	var s1 = '4xxx111yyy22yyy';
+	var parse_s1 = /\d([A-Za-z]+)\d+([A-Za-z]+)\d+\1/gi;
+	console.log(parse_s1.test(s1));
 </script>
 </body>
 </html>
