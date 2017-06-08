@@ -30,6 +30,28 @@
 	}
 	delete obj.xxx;
 	console.log(anotherOfAnother);
+	//Check global
+	console.log("test global");
+	var global = 5;
+	var funUsingGlobal = function() {
+		var global = 6;
+		console.log("in function: "+global);
+		console.log(this);
+	}
+	funUsingGlobal();
+	console.log("outer function: "+global);
+	console.log(parseInt("09"));
+	var another_stooge = {
+		x : 'xxx',
+		y : 'yyy'
+	};
+	var name;
+// 	another_stooge.hasOwnProperty = null; // trouble
+	for (name in another_stooge) {
+		if (another_stooge.hasOwnProperty(name)) { // boom
+			console.log(name + ': ' + another_stooge[name]);
+		}
+	}
 </script>
 </body>
 </html>
