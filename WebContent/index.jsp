@@ -10,7 +10,7 @@
 <body>
 <h1>Welcome Page</h1>
 <script type="text/javascript">
-	alert("3+6 = " + add(3, 6));
+	console.log("3+6 = " + add(3, 6));
 	var obj = {	num1: 1,
 				num2: 2,
 				num3: 3
@@ -33,6 +33,7 @@
 	//Check global
 	console.log("test global");
 	var global = 5;
+	
 	var funUsingGlobal = function() {
 		var global = 6;
 		console.log("in function: "+global);
