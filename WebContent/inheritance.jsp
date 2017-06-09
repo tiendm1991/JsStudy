@@ -113,7 +113,7 @@
 			s+='r';
 		}
 		return s;
-	}
+	};
 	console.log(myCatPro);
 	console.log(myCatPro.getName());
 	console.log(myCatPro.purr(3));
@@ -158,6 +158,49 @@
 	console.log(myCatFun.getName());
 	console.log(myCatFun.purr(3));
 	console.log(myCatFun.says());
+	
+	
+	console.log("*************propaty2*********");
+	var Thing = function (name) {
+	  this.type = "universal";
+	  this.name = name;
+	}
+	Thing.prototype = {
+	  say: function(something) {
+	    console.log(this.name + " say something " + something);
+	  },
+	  check_soul: function (){
+	    console.log(this.name + " soul is " + this.type);
+	  }
+	}
+	var God = function(name){
+	  Thing.call(this, name); // Execute parent constructor also with current context
+	  this.type = "pure"; // overwrite the type
+	};
+
+// 	God.prototype = Object.create(Thing.prototype); // inherit God from Thing
+	God.prototype = new Thing(); 
+	God.prototype.constructor = God; // implement the constructor
+
+	var Demon = function(name){
+	  Thing.call(this, name);
+	  this.type = "corrupted";
+	}
+
+	Demon.prototype = Object.create(Thing.prototype, {
+	  say: {
+	    value: function(something){ // Overwrite Thing prototype for say
+	    console.info(this.name + " say: Let's destory " + something + "!");
+	  }}
+	}); 
+	Demon.prototype.constructor = Demon;
+	
+	var anonymous = new Thing("Anonymous");
+	console.log(anonymous);
+	var god = new God("Zeus");
+	console.log(god);
+	var demon = new Demon("Lucifer");
+	console.log(demon);
 </script>
 </body>
 </html>
