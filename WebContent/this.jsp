@@ -78,7 +78,7 @@
 		// new binding : constructor invocation
 
 		// Order
-		// Explicit -> implicit . Bind -> construtor -> implicit
+		// Explicit -> implicit . construtor -> Bind -> implicit -> default
 		console.log('order');
 		function fooOrder(something) {
 			this.a = something;
@@ -109,6 +109,7 @@
 		console.log( bar2 ); // 2
 		console.log('baz');
 		console.log( baz); // 3
+		
 	</script>
 </body>
 </html>
