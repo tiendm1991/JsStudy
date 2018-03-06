@@ -30,8 +30,11 @@
 	
 	SubPerson.prototype = Object.create(Person.prototype);
 	SubPerson.prototype.gender = 'female';
-	var per3 = new SubPerson('abc',22);
+	var per3 = new SubPerson('per3',23);
 	console.log(per3);
+	
+	var per4 = new per1.constructor('per4',24);
+	console.log(per4);
 </script>
 </body>
 </html>
